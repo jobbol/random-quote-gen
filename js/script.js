@@ -190,16 +190,13 @@ function printQuote () {
 
 
 /**
- * Changes the body background color to be a random linear gradient with a light color scheme.
+ * Changes the body background color to be a random color with a light color scheme.
  */
 function changeBackground () {
   const $body = document.querySelector('body');
   const min = 210;
   let rgb = `rgb(${random(min, 255)}, ${random(min, 255)}, ${random(min, 255)})`;
-  let style = `radial-gradient(circle at center, white 50%, ${rgb});`;
-  style = rgb;
-  console.log(style);
-  $body.style.setProperty('background', style);
+  $body.style.setProperty('background', rgb);
 }
 
 
