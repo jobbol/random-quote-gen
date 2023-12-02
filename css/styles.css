@@ -3,12 +3,20 @@
  * Random Quote Generator - CSS
  */
 
- @import url('https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,700,700i&display=swap');
+ @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap');
+
+ html {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
 
 body {
-  background-color: rgb(58, 193, 98);
-  color: white;
-  font-family: 'Playfair Display', serif;
+  background: radial-gradient(circle at center, white 50%, rgb(184, 154, 154));
+
+
+  color: rgb(3, 2, 2);
+  font-family: 'Montserrat', sans-serif;
   padding: 5px;
 }
 
@@ -27,7 +35,7 @@ h1 {
 }
 
 .load-quote {
-  color: #fff;
+  color: #070404;
   text-shadow: 1px 1px 1px rgba(50, 50, 50, 0.3);
   width: 12em;
   max-height: 75px;
@@ -139,7 +147,7 @@ h1 {
   .container {
     padding: 25px 25px 15px 55px;
     background: rgba(0, 0, 0, 0.1);
-    border-left: 5px solid rgba(0, 0, 0, 0.3);
+    border-bottom: 10px solid rgba(0, 0, 0, 0.3);
     border-radius: 0 4px 4px 0;
   }
 

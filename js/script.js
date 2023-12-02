@@ -1,3 +1,5 @@
+(function () {
+
 'use strict';
 
 /******************************************
@@ -11,40 +13,53 @@ project 1 - A Random Quote Generator
 let quotes = [
   {
     quote: 'If you\'re going through hell, keep going.',
-    citation: 'Winston Churchill',
+    source: 'Winston Churchill',
     year: '1965'
   },
   {
     quote: 'I don\'t want to be part of a world where being kind is a weakness.',
-    citation: 'Keanu Reeves'
+    source: 'Keanu Reeves'
   },
   {
     quote: 'Between two evils, I generally like to pick the one I never tried before.',
-    citation: 'Mae West'
+    source: 'Mae West'
   },
-  'If you can get 1% better each day for one year, you\'ll end up 37 times better by the time you\'re done.',
-];
-
-/**
- * Init quotes array to contain similar object type,
- * and for citation and year to be empty string if they don't exist.
- * 'Live long and prosper.' => {quote: 'Live long and prosper.', citation: '', year: ''}
- */
-
-quotes = quotes.map(quote => {
-  if (typeof quote === 'string') {
-    quote = {quote};
+  {
+    quote: 'If you can get 1% better each day for one year, you\'ll end up 37 times better by the time you\'re done.',
+    source: 'James Clear',
+  },
+  {
+    quote: 'We are all our own little Atlases carrying the weight of a world upon our shoulders.',
+    source: 'close friend'
+  },
+  {
+    quote: 'Throw yourself into the unknown with pace and a fury defiant clothe yourself in beauty untold and see life as a means to a triumph.',
+    source: 'Gang of Youths',
+    cite: 'Achilles Come Down',
+    year: 2017
+  },
+  {
+    quote: '',
+    source: ''
+  },
+  {
+    quote: '',
+    source: ''
+  },
+  {
+    quote: '',
+    source: ''
   }
-  quote.citation = quote.citation ?? '';
-  quote.year = quote.year ?? '';
-  return quote;
-})
+];
 
 
 /***
  * `getRandomQuote` function
  * Returns a random quote with measures in place to prevent duplicate quotes from appearing, 
  * and to show all quotes at least once before repeating. Does not alter initial quote array.
+ *@typedef quoteObject
+ *@p
+ *@property {quote[]}
 ***/
 let quotesLeft = [];
 let quoteLast;
@@ -66,36 +81,43 @@ function getRandomQuote () {
 
 /***
  * `printQuote` function
- * Alters HTML by displaying a random quote.  HTML must have structure of:
- * <id="quote-box">
- *  <class="quote"></>
- *  <class="year"></>
- *  <class="citation"></>
- * </>
+ * Alters HTML by displaying a random quote within.
+ * HTML must contain an id of quote-box for the quote to go in.
 ***/
 function printQuote () {
+  const quote = getRandomQuote();
+
+  if (!quote?.quote) {
+    throw new Error('Quote was not an object, missing, or an empty string.');
+  }
+
+  if (!quote?.source) {
+    throw new Error('Quote was missing source property.');
+  }
+
   const $container = document.querySelector('#quote-box');
-  const $quote = document.createElement()
-  const $year  = document.querySelector('#quote-box .year');
-  const $cite  = document.querySelector('#quote-box .citation');
+  $container.innerHTML = '';
 
-  if (!$quote) {
-    throw new Error('HTML was missing quote element.');
-  }
-  if (!$year) {
-    throw new Error('HTML was missing year element.');
-  }
-  if (!$cite) {
-    throw new Error('HTML was missing citation element.');
+  if (!$container) {
+    throw new Error('HTML was missing an element with ID of quote-box, for quotes to be inserted into.');
   }
 
-  const {quote, year, citation} = getRandomQuote();
-  $quote.innerText = quote;
-  $year.innerText  = year;
-  $cite.innerText  = citation;
+  const $quote = elem('p', 'quote', quote.quote);
+  $container.append($quote);
 
-  $year.setAttribute('display', year?     'inherit': 'hidden');
-  $cite.setAttribute('display', citation? 'inherit': 'hidden');
+  const $source = elem('p', 'source', quote.source);
+  
+  if (quote.citation) {
+    const $citation = elem('span', 'citation', quote.citation);
+    $source.append($citation);
+  }
+
+  if (quote.year) {
+    const $year = elem('span', 'year', quote.year);
+    $source.append($year);
+  }
+
+  $container.append($source);
 }
 
 
@@ -105,8 +127,7 @@ function printQuote () {
 ***/
 
 document.getElementById('load-quote').addEventListener("click", printQuote, false);
-
-
+printQuote();
 
 
 
@@ -117,3 +138,23 @@ document.getElementById('load-quote').addEventListener("click", printQuote, fals
 function random (min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+
+
+/**
+ * Create an HTML element with a given tag, className and text value.
+ * returns HTML element.
+ */
+function elem(tag, className, innerText) {
+  const $elem = document.createElement(tag);
+  if (className) {
+    $elem.className = className;
+  }
+  if (innerText) {
+    $elem.innerText = innerText;
+  }
+
+  return $elem;
+};
+
+
+})();
