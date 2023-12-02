@@ -21,7 +21,7 @@ project 1 - A Random Quote Generator
  * @property {string} [citation]   - where the quote came from
  * @property {string|number} [year]   - year it was coined
  * @property {string[]} [tags] - an array of phrases to categorize similar quotes
- * @property {linkObject} [link] - a link to the 
+ * @property {linkObject} [link] - a link to the quote
  * 
  * @typedef linkObject
  * @property {string} text - Text displayed for the link.
